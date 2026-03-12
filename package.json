@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "/bin/rm -rfv ../application/pub/react && /bin/cp -avf dist ../application/pub/react && sed 's@/assets@/react/assets@g' -i ../application/pub/react/index.html && cat ../application/pub/react/index.html |grep -e '\\(stylesheet\\|script\\)' > ../application/app/code/Casoca/ReactPoc/view/frontend/templates/head/assets.phtml"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
