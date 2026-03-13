@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import { getCountryInfoByName } from "./services/restCountries";
+//import { getCountryInfoByName } from "./services/restCountries";
+import { getLoginRefreshed } from "./services/ajaxLoginRefresh";
 import { ToastContainer, toast } from "react-toastify";
 import { HttpStatusCode } from "axios";
 
@@ -9,6 +10,25 @@ function App() {
   const [countryFlag, setCountryFlag] = useState("");
 
   const handleSubmit = async () => {
+    const response = await getLoginRefreshed();
+    if (response.status === HttpStatusCode.Ok) {
+      toast.success("Dados do usuário carregados com sucesso!!", {
+        position: "top-right",
+        autoClose: 5000,
+        toastId: `${response.status}`,
+      });
+    } else {
+      toast.error("Problemas para ler dados de usuário!!", {
+        position: "top-right",
+        autoClose: 5000,
+        toastId: `${response.status}`,
+      });
+    }
+    setCountryFlag("");
+    setCountryName(response.data);
+  };
+
+  /*const handleCountrySubmit = async () => {
     const response = await getCountryInfoByName(countryName);
     if (response.status === HttpStatusCode.Ok) {
       toast.success("Bandeira atualizada com sucesso!!", {
@@ -25,7 +45,7 @@ function App() {
     }
     setCountryFlag(response.data);
     setCountryName("");
-  };
+  };*/
 
   return (
     <>
